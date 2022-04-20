@@ -1,6 +1,6 @@
 package schauzu.projekt;
 
-public class Genre {
+public class Genre extends Film{
 	
 	private int genreId;
 	private String bezeichnung;

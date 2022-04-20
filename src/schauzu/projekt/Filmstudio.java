@@ -1,6 +1,6 @@
 package schauzu.projekt;
 
-public class Filmstudio {
+public class Filmstudio extends Film{
 	
 	private int studioId;
 	private String studioName;

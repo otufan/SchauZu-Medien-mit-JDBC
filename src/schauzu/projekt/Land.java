@@ -1,6 +1,6 @@
 package schauzu.projekt;
 
-public class Land {
+public class Land extends Film{
 
 	private int landId;
 	private String land;

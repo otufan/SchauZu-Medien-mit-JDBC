@@ -1,6 +1,6 @@
 package schauzu.projekt;
 
-public class Schauspieler {
+public class Schauspieler extends Film{
 
 	private int id;
 	private String name;

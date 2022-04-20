@@ -6,31 +6,35 @@ import java.util.Scanner;
 public class SchauzuTest {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		
+		Scanner scan=new Scanner(System.in);
+		Methode mt=new Methode();
+		
+		String filmtitel="";
+		String neuerFilm="";
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC", "root", "Pass.4150");
 
 		Statement st = con.createStatement();
-
-		ResultSet veri1 = st.executeQuery("SELECT * FROM film f, filmstudio fs where f.filmstudio_id=fs.filmstudio_id and fs.studio_name='Warner Bros'");
-
-
-		Scanner scan=new Scanner(System.in);
-		System.out.println("Bitte geben Sie eine Filmtitel ein : ");
-		String sorgu = scan.nextLine();
 		
-		String sonuc="SELECT * FROM film f, film_land fl, land l where l.land_id=fl.land_id and fl.filmtitel=f.filmtitel and f.filmtitel='" +sorgu +"'";
+		mt.getAllFilmtitel();
+			
+		System.out.println("Bitte geben Sie die Namen des Films ein, zu dem Sie auf Informationen zugreifen möchten : ");
+		filmtitel=scan.nextLine();
 		
-		ResultSet veri = st.executeQuery(sonuc);
+		mt.menu(filmtitel);
 		
+		System.out.println("Möchten Sie einen neuen Film einfügen ? (Ja/Nein) ");
+		neuerFilm=scan.next();
 		
-		while (veri.next()) {
-			System.out.println(veri.getString("Land") + " " + veri.getInt("Dauer")+ " " + veri.getString("filmtitel") );
-
-
+		if (neuerFilm.equalsIgnoreCase("ja")) {			
+			mt.addFilm();
 		}
-
+		
+		
+		
 		st.close();
 		con.close();
 

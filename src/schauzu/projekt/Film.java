@@ -1,6 +1,6 @@
 package schauzu.projekt;
 
-public class Film {
+public class Film  {
 	
 	private String filmtitel;
 	private int dauer;
@@ -48,11 +48,5 @@ public class Film {
 		return "Filmtitel=" + filmtitel + ", Dauer=" + dauer + ", Inhaltbeschreibung=" + inhaltbeschreibung;
 	}
 	
-	
-	public void getFilmstudiobyFilmtitel(String filmtitel) {
-		
-		
-		
-	}
 
 }
