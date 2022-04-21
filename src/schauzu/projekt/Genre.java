@@ -9,8 +9,11 @@ public class Genre extends Film{
 
 	}
 
-	public Genre(int genreId, String bezeichnung) {
+	public Genre(String filmtitel, int dauer, String inhaltbeschreibung, int genreId, String bezeichnung) {
 		
+		setFilmtitel(filmtitel);
+		setDauer(dauer);
+		setInhaltbeschreibung(inhaltbeschreibung);
 		setGenreId(genreId);
 		setBezeichnung(bezeichnung);
 	}
@@ -33,7 +36,7 @@ public class Genre extends Film{
 
 	@Override
 	public String toString() {
-		return "GenreId=" + genreId + ", Bezeichnung=" + bezeichnung;
+		return super.toString()+", Bezeichnung=" + bezeichnung;
 	}
 	
 	

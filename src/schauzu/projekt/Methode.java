@@ -4,13 +4,21 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Methode {
+	
+	private static String benutzerName="root";
+	private static String pass="Pass.4150";
 
 	public void menu(String filmtitel) throws ClassNotFoundException, SQLException {
 
 		Scanner scan = new Scanner(System.in);
-
-		int auswahl = 0;
 		String film = filmtitel;
+		int auswahl = 0;
+
+		while (!hasFilmtitel(film)) {
+			System.out.println(
+					"Dieser Film ist in der Datenbak NICHT verfügbar ! \nBitte wählen Sie einen anderen Filmtitel aus");
+			film = neuerFilmtitel();
+		}
 
 		do {
 
@@ -31,17 +39,20 @@ public class Methode {
 				findFilmstudio(film);
 				break;
 			case 4:
-				findLand(filmtitel);
+				findLand(film);
 				break;
 			case 5:
-				findGenre(filmtitel);
+				findGenre(film);
 				break;
 			case 6:
-				findInhaltbeschreibung(filmtitel);
+				findInhaltbeschreibung(film);
 				break;
 			case 7:
 				getAllFilmtitel();
-				film = neuerFilmtitel();
+				do {
+					film = neuerFilmtitel();
+				} while (!hasFilmtitel(film));
+						
 				break;
 			case 8:
 				System.out.println("Vielen Dank ! ");
@@ -55,13 +66,12 @@ public class Methode {
 
 	}
 
-	
 	public static void findDauer(String filmtitel) throws ClassNotFoundException, SQLException {
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 
@@ -83,7 +93,7 @@ public class Methode {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 
@@ -107,7 +117,7 @@ public class Methode {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 
@@ -131,7 +141,7 @@ public class Methode {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 
@@ -157,7 +167,7 @@ public class Methode {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 
@@ -182,7 +192,7 @@ public class Methode {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 
@@ -200,24 +210,52 @@ public class Methode {
 		con.close();
 
 	}
-	
-	public void getAllFilmtitel() throws ClassNotFoundException, SQLException {
 
-		int count=0;
-		
+	public boolean hasFilmtitel(String filmtitel) throws ClassNotFoundException, SQLException {
+
+		boolean hasFilmtitel = false;
+
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
-		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC", "root", "Pass.4150");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
-		
+
+		String abfrage = "SELECT * FROM film WHERE filmtitel='" + filmtitel + "'";
+
+		ResultSet veri = st.executeQuery(abfrage);
+
+		if (veri.next()) {
+			hasFilmtitel = true;
+		} else {
+			hasFilmtitel = false;
+		}
+
+		st.close();
+		con.close();
+		return hasFilmtitel;
+
+	}
+
+	public void getAllFilmtitel() throws ClassNotFoundException, SQLException {
+
+		int count = 0;
+
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
+				benutzerName, pass);
+
+		Statement st = con.createStatement();
+
 		String abfrage = "SELECT * FROM film ";
 
 		ResultSet veri = st.executeQuery(abfrage);
 
 		while (veri.next()) {
 			count++;
-			System.out.println(count+". Filmtitel : " + veri.getString("Filmtitel"));
+			System.out.println(count + ". Filmtitel : " + veri.getString("Filmtitel"));
 		}
 
 		st.close();
@@ -230,7 +268,7 @@ public class Methode {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/schauzu_projekt?serverTimezone=UTC",
-				"root", "Pass.4150");
+				benutzerName, pass);
 
 		Statement st = con.createStatement();
 		PreparedStatement ps = con.prepareStatement("INSERT INTO film VALUES(?,?,?,?)");
@@ -239,8 +277,17 @@ public class Methode {
 		String eingabe = "";
 
 		Film film = new Film();
+		
 		System.out.println("Bitte geben Sie den Filmtitel ein : ");
+		
 		film.setFilmtitel(scan.nextLine());
+
+		while (hasFilmtitel(film.getFilmtitel())) {
+			System.out.println(
+					"Dieser Film ist in der Datenbak  verfügbar ! \nBitte wählen Sie einen anderen Filmtitel aus");
+			film.setFilmtitel(neuerFilmtitel());
+		}
+
 		System.out.println("Bitte geben Sie die Inhaltbeschreibung ein : ");
 		film.setInhaltbeschreibung(scan.nextLine());
 		System.out.println("Bitte geben Sie die Dauer des Films ein : ");
@@ -268,7 +315,7 @@ public class Methode {
 
 	private String neuerFilmtitel() {
 		Scanner scan = new Scanner(System.in);
-		System.out.print("Bitte geben Sie neuen Filmtitel ein, zu dem Sie auf Informationen zugreifen möchten : ");
+		System.out.print("Bitte geben Sie einen neuen Filmtitel ein : ");
 
 		String film = scan.nextLine();
 
@@ -280,14 +327,16 @@ public class Methode {
 		int id = 0;
 
 		System.out.println(
-				"10-Warner Bros, \n11-Paramount Pictures \n12-Lucas Film \13-UFA \n14-Pinewood Studios\n15-Universal Picture");
+				"10-Warner Bros, \n11-Paramount Pictures \n12-Lucas Film \n13-StudioCanal \n14-Universal Picture");
 
 		do {
 			System.out.println("Bitte geben Sie die ID Nummer des Filmstudios ein :");
 
+			
 			id = scan.nextInt();
-		} while (id < 10 || id > 15);
-
+		} while (id < 10 || id > 14);
+		
+		System.out.println("ausgewaehlte ID-Nummer :" +id);
 		return id;
 	}
 

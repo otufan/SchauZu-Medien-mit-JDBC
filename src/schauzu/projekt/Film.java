@@ -32,6 +32,10 @@ public class Film  {
 	}
 
 	public void setDauer(int dauer) {
+		
+		if (dauer<0) {
+			dauer=0;
+		}
 		this.dauer = dauer;
 	}
 
@@ -45,7 +49,7 @@ public class Film  {
 
 	@Override
 	public String toString() {
-		return "Filmtitel=" + filmtitel + ", Dauer=" + dauer + ", Inhaltbeschreibung=" + inhaltbeschreibung;
+		return "Klasse="+getClass().getSimpleName()+", Filmtitel=" + filmtitel + ", Dauer=" + dauer + ", Inhaltbeschreibung=" + inhaltbeschreibung;
 	}
 	
 

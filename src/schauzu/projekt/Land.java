@@ -9,8 +9,11 @@ public class Land extends Film{
 
 	}
 
-	public Land(int landId, String land) {
+	public Land(String filmtitel, int dauer, String inhaltbeschreibung, int landId, String land) {
 
+		setFilmtitel(filmtitel);
+		setDauer(dauer);
+		setInhaltbeschreibung(inhaltbeschreibung);
 		setLandId(landId);
 		setLand(land);
 	}
@@ -33,7 +36,7 @@ public class Land extends Film{
 
 	@Override
 	public String toString() {
-		return "Land Id=" + landId + ", Land=" + land;
+		return super.toString()+ ", Land=" + land;
 	}
 
 	

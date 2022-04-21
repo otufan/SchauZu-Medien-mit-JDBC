@@ -9,8 +9,11 @@ public class Filmstudio extends Film{
 		
 	}
 
-	public Filmstudio(int studioId, String studioName) {
+	public Filmstudio(String filmtitel, int dauer, String inhaltbeschreibung, int studioId, String studioName) {
 		
+		setFilmtitel(filmtitel);
+		setDauer(dauer);
+		setInhaltbeschreibung(inhaltbeschreibung);
 		setStudioId(studioId);
 		setStudioName(studioName);
 	}
@@ -33,7 +36,7 @@ public class Filmstudio extends Film{
 
 	@Override
 	public String toString() {
-		return "Filmstudio Id=" + studioId + ", Studio Name=" + studioName;
+		return super.toString()+ ", Studio Name=" + studioName;
 	}
 	
 }
