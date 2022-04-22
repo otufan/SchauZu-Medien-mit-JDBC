@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Methode {
 
 	private final static String BENUTZURNAME = "root";
-	private final static String PASS = "Pass.4150";
+	private final static String PASS = "1234";
 
 	public static String getBenutzurname() {
 		return BENUTZURNAME;
@@ -85,10 +85,10 @@ public class Methode {
 
 		String abfrage = "SELECT * FROM film WHERE filmtitel='" + filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
-		while (veri.next()) {
-			System.out.println("Filmtitel : " + veri.getString("Filmtitel") + ", Dauer : " + veri.getString("Dauer"));
+		while (rs.next()) {
+			System.out.println("Filmtitel : " + rs.getString("Filmtitel") + ", Dauer : " + rs.getString("Dauer"));
 		}
 
 		st.close();
@@ -108,11 +108,11 @@ public class Methode {
 		String abfrage = "SELECT * FROM film f, hauptdarsteller h, schauspieler s WHERE f.filmtitel=h.filmtitel and h.schauspieler_id=s.schauspieler_id and f.filmtitel='"
 				+ filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
-		while (veri.next()) {
-			System.out.println("Vorname und Name : " + veri.getString("Vorname") + " " + veri.getString("Name")
-					+ ", Rolle: " + veri.getString("Rolle"));
+		while (rs.next()) {
+			System.out.println("Vorname und Name : " + rs.getString("Vorname") + " " + rs.getString("Name")
+					+ ", Rolle: " + rs.getString("Rolle"));
 		}
 
 		st.close();
@@ -132,11 +132,11 @@ public class Methode {
 		String abfrage = "SELECT * FROM film f, filmstudio fs WHERE f.filmstudio_id=fs.filmstudio_id and f.filmtitel='"
 				+ filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
-		while (veri.next()) {
+		while (rs.next()) {
 			System.out.println(
-					"Filmtitel : " + veri.getString("Filmtitel") + "\nFilmstudio : " + veri.getString("studio_name"));
+					"Filmtitel : " + rs.getString("Filmtitel") + "\nFilmstudio : " + rs.getString("studio_name"));
 		}
 
 		st.close();
@@ -156,12 +156,12 @@ public class Methode {
 		String abfrage = "SELECT * FROM film f, film_land fl, land l WHERE f.filmtitel=fl.filmtitel and fl.land_id=l.land_id and f.filmtitel='"
 				+ filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
 		System.out.print("Länder, in denen der Film gedreht wurde : ");
 
-		while (veri.next()) {
-			System.out.print(veri.getString("Land") + " \t");
+		while (rs.next()) {
+			System.out.print(rs.getString("Land") + " \t");
 
 		}
 		System.out.println();
@@ -182,12 +182,12 @@ public class Methode {
 		String abfrage = "SELECT * FROM film f, film_genre fg, genre g WHERE f.filmtitel=fg.filmtitel and fg.genre_id=g.genre_id and f.filmtitel='"
 				+ filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
 		System.out.print("Filmgenre : ");
 
-		while (veri.next()) {
-			System.out.print(veri.getString("Bezeichnung") + " - ");
+		while (rs.next()) {
+			System.out.print(rs.getString("Bezeichnung") + " - ");
 		}
 		System.out.println();
 		st.close();
@@ -206,11 +206,11 @@ public class Methode {
 
 		String abfrage = "SELECT * FROM film WHERE filmtitel='" + filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
-		while (veri.next()) {
-			System.out.println("Filmtitel : " + veri.getString("Filmtitel") + "\nInhaltbeschreibung : "
-					+ veri.getString("Inhaltbeschreibung"));
+		while (rs.next()) {
+			System.out.println("Filmtitel : " + rs.getString("Filmtitel") + "\nInhaltbeschreibung : "
+					+ rs.getString("Inhaltbeschreibung"));
 
 		}
 
@@ -232,9 +232,9 @@ public class Methode {
 
 		String abfrage = "SELECT * FROM film WHERE filmtitel='" + filmtitel + "'";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
-		if (veri.next()) {
+		if (rs.next()) {
 			hasFilmtitel = true;
 		} else {
 			hasFilmtitel = false;
@@ -259,11 +259,11 @@ public class Methode {
 
 		String abfrage = "SELECT * FROM film ";
 
-		ResultSet veri = st.executeQuery(abfrage);
+		ResultSet rs = st.executeQuery(abfrage);
 
-		while (veri.next()) {
+		while (rs.next()) {
 			count++;
-			System.out.println(count + ". Filmtitel : " + veri.getString("Filmtitel"));
+			System.out.println(count + ". Filmtitel : " + rs.getString("Filmtitel"));
 		}
 
 		st.close();

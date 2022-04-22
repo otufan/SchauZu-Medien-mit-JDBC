@@ -11,7 +11,8 @@ public class SchauzuTest {
 		Methode mt = new Methode();
 		String filmtitel = "";
 		String neuerFilm = "";
-		/*	
+		int count=0;
+			
 		System.out.println("------------- überprüfen die Verbindung zwischen MySQL un Java ----------------------");
 		System.out.println("-------------------------------------------------------------------------------------");
 
@@ -22,11 +23,17 @@ public class SchauzuTest {
 
 		Statement st = con.createStatement();
 
-		mt.getAllFilmtitel(); // Mit Hilfe dieser Methode werden alle Filmtitels in der Datenbank auf der
-								// Konsole angezeigt.
+		String abfrage = "SELECT * FROM film ";
 
-		System.out
-				.println("Bitte geben Sie die Namen des Films ein, zu dem Sie auf Informationen zugreifen möchten : ");
+		ResultSet rs = st.executeQuery(abfrage);
+
+		while (rs.next()) {
+			count++;
+			System.out.println(count + ". Filmtitel : " + rs.getString("Filmtitel"));
+		}
+
+
+		System.out.println("Bitte geben Sie die Namen des Films ein, zu dem Sie auf Informationen zugreifen möchten : ");
 
 		filmtitel = scan.nextLine();
 
@@ -38,15 +45,15 @@ public class SchauzuTest {
 		neuerFilm = scan.next();
 
 		if (neuerFilm.equalsIgnoreCase("ja")) {
-			mt.addFilm();
+			mt.addFilm();// Mit Hilfe dieser Methode kann ein Film, der sich nicht in der Datenbank befindet, der Datenbank hinzugefügt werden.
 		}
 
-		mt.getAllFilmtitel(); // Mit Hilfe dieser Methode kann ein Film, der sich nicht in der Datenbank
-								// befindet, der Datenbank hinzugefügt werden.
+		mt.getAllFilmtitel(); // Mit dieser Methode wird jeder Filmtitel im Konsole gezeigt
+								 
 
 		st.close();
 		con.close();
-*/
+
 		System.out.println("--------------------- überprüfen die Objekte Klasse in Java -------------------------");
 		System.out.println("-------------------------------------------------------------------------------------\n");
 
